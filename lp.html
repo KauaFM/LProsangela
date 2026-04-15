@@ -1,0 +1,2386 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dra. Rosângela — Advocacia</title>
+
+  <!-- FAVICON - Logo na aba -->
+  <link rel="icon" type="image/png" href="img/Logo1.png">
+  <link rel="apple-touch-icon" href="img/Logo1.png">
+  <link rel="shortcut icon" href="img/Logo1.png">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@200;300;400;500&family=Pinyon+Script&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ─── RESET & VARS ─── */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    :root {
+      --noir: #0F0808;
+      --noir-2: #1A0E0E;
+      --rouge: #8B1A1A;
+      --rouge-mid: #A02020;
+      --rouge-pale: #D4A0A0;
+      --slate: #1C1F26;
+      --slate-2: #252933;
+      --rust: #B85C38;
+      --rust-light: #C96840;
+      --sand: #E8C4A0;
+      --cream: #F2EDE8;
+      --text: #F0EAEA;
+      --text-dim: #C8B0B0;
+      --text-ghost: #6A5050;
+      --gold: #C9A84C;
+      --line: rgba(184, 92, 56, 0.18);
+    }
+
+    body {
+      background: var(--noir);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* logo watermark */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url('Logo.png');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: 480px auto;
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.35;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--noir);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--rouge);
+    }
+
+    /* ══════════════════════════════════
+   SPLASH INTRO
+══════════════════════════════════ */
+    #splash {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #080508;
+      overflow: hidden;
+      will-change: transform;
+      /* sem transition aqui — o movimento é controlado pelo scroll via JS */
+    }
+
+    #splash.splash-done {
+      pointer-events: none;
+      visibility: hidden;
+    }
+
+    .splash-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 30%, rgba(139, 26, 26, 0.25) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 75%, rgba(184, 92, 56, 0.07) 0%, transparent 40%),
+        linear-gradient(170deg, #0A0608 0%, #0F0808 45%, #080A0F 100%);
+    }
+
+    .splash-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.68) 100%);
+      pointer-events: none;
+    }
+
+    .splash-grain {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+      pointer-events: none;
+      opacity: 0.3;
+    }
+
+    /* corner brackets */
+    .splash-corner {
+      position: absolute;
+      width: 52px;
+      height: 52px;
+      opacity: 0;
+      animation: splashCorner 1s 0.5s ease forwards;
+    }
+
+    @keyframes splashCorner {
+      to {
+        opacity: 0.55;
+      }
+    }
+
+    .splash-tl {
+      top: 36px;
+      left: 36px;
+      border-top: 1px solid #C9A84C;
+      border-left: 1px solid #C9A84C;
+    }
+
+    .splash-tr {
+      top: 36px;
+      right: 36px;
+      border-top: 1px solid #C9A84C;
+      border-right: 1px solid #C9A84C;
+    }
+
+    .splash-bl {
+      bottom: 36px;
+      left: 36px;
+      border-bottom: 1px solid #C9A84C;
+      border-left: 1px solid #C9A84C;
+    }
+
+    .splash-br {
+      bottom: 36px;
+      right: 36px;
+      border-bottom: 1px solid #C9A84C;
+      border-right: 1px solid #C9A84C;
+    }
+
+    /* center block */
+    .splash-center {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      opacity: 0;
+      animation: splashRise 1.3s 0.15s ease forwards;
+    }
+
+    @keyframes splashRise {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .splash-logo-img {
+      width: clamp(80px, 11vw, 130px);
+      height: auto;
+      margin-bottom: 24px;
+      filter: drop-shadow(0 4px 24px rgba(201, 168, 76, 0.25));
+    }
+
+    .splash-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 3vw, 36px);
+      font-weight: 400;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: #F0EAEA;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .splash-name em {
+      font-style: italic;
+      color: rgba(201, 168, 76, 0.85);
+    }
+
+    .splash-tagline {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(201, 168, 76, 0.5);
+      font-weight: 300;
+    }
+
+    /* scroll hint */
+    .splash-scroll-hint {
+      position: absolute;
+      bottom: 44px;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      animation: splashRise 1s 1.8s ease forwards;
+      white-space: nowrap;
+    }
+
+    .splash-scroll-hint span {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(201, 168, 76, 0.4);
+    }
+
+    .splash-scroll-line {
+      width: 1px;
+      height: 46px;
+      background: linear-gradient(to bottom, rgba(201, 168, 76, 0.75), transparent);
+      animation: scrollLinePulse 2s 2.5s ease-in-out infinite;
+    }
+
+    @keyframes scrollLinePulse {
+
+      0%,
+      100% {
+        opacity: 0.35;
+        transform: scaleY(0.8);
+        transform-origin: top;
+      }
+
+      50% {
+        opacity: 1;
+        transform: scaleY(1);
+        transform-origin: top;
+      }
+    }
+
+    /* hide nav + float-wa while splash active */
+    body.splash-on nav {
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transition: opacity 0.5s ease;
+    }
+
+    body.splash-on .float-wa {
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 500;
+      padding: 22px 60px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      transition: opacity 0.6s ease, transform 0.35s ease, padding 0.4s, background 0.4s;
+    }
+
+    nav.scrolled {
+      padding: 14px 60px;
+      background: rgba(15, 8, 8, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    nav.nav-hidden {
+      transform: translateY(-100%);
+    }
+
+    .logo {
+      text-align: center;
+      grid-column: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-img {
+      height: 38px;
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 2px 8px rgba(201, 168, 76, 0.15));
+      transition: opacity 0.2s;
+    }
+
+    .logo-img:hover {
+      opacity: 0.85;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      justify-content: flex-end;
+      grid-column: 3;
+    }
+
+    .nav-link {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-ghost);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover {
+      color: var(--text-dim);
+    }
+
+    .nav-btn {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--noir);
+      background: var(--rust);
+      padding: 10px 24px;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: var(--rust-light);
+      transform: translateY(-1px);
+    }
+
+    /* ─── PARALLAX ENGINE ─── */
+    .parallax-section {
+      position: relative;
+      overflow: hidden;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .parallax-bg {
+      position: absolute;
+      inset: -20%;
+      will-change: transform;
+      pointer-events: none;
+    }
+
+    /* ─── SECTION 2 — PROBLEM (parallax) ─── */
+    #problem {
+      min-height: 100vh;
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+
+    .problem-bg {
+      position: absolute;
+      inset: -20%;
+      background: radial-gradient(ellipse at 30% 50%, rgba(184, 92, 56, 0.07) 0%, transparent 60%);
+      will-change: transform;
+    }
+
+    .problem-left-col {
+      padding: 120px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .section-badge {
+      font-size: 11px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .section-badge::before {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--rust);
+    }
+
+    .section-h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(44px, 5.2vw, 72px);
+      font-weight: 600;
+      line-height: 1.05;
+      letter-spacing: -1px;
+      color: var(--text);
+      margin-bottom: 40px;
+    }
+
+    .section-h2 em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--rouge-pale);
+    }
+
+    .section-body {
+      font-size: 17px;
+      color: var(--text-dim);
+      line-height: 1.85;
+      max-width: 440px;
+      font-weight: 300;
+    }
+
+    .section-body strong {
+      color: var(--sand);
+      font-weight: 400;
+    }
+
+    /* vertical number list — no cards, no icons */
+    .problem-right-col {
+      padding: 120px 80px 120px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .problem-right-col::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 15%;
+      bottom: 15%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--line), transparent);
+    }
+
+    .problem-item {
+      padding: 36px 0;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 24px;
+      align-items: start;
+      transition: padding-left 0.3s ease;
+      cursor: default;
+    }
+
+    .problem-item:first-child {
+      border-top: 1px solid var(--line);
+    }
+
+    .problem-item:hover {
+      padding-left: 12px;
+    }
+
+    .p-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--rouge);
+      letter-spacing: 2px;
+      padding-top: 4px;
+    }
+
+    .p-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .p-body {
+      font-size: 15px;
+      color: var(--text-ghost);
+      line-height: 1.8;
+    }
+
+    /* ghost "PRAZO" text behind right col */
+    .problem-ghost {
+      position: absolute;
+      right: -20px;
+      bottom: 5%;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 180px;
+      font-weight: 700;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(139, 26, 26, 0.07);
+      user-select: none;
+      pointer-events: none;
+      writing-mode: vertical-rl;
+      letter-spacing: -8px;
+      will-change: transform;
+    }
+
+    /* ─── SECTION 3 — HOW (dark slate) ─── */
+    #how {
+      background: var(--slate);
+      position: relative;
+      padding: 140px 80px;
+      overflow: hidden;
+    }
+
+    .how-bg {
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(ellipse at 80% 20%, rgba(139, 26, 26, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 10% 80%, rgba(184, 92, 56, 0.06) 0%, transparent 50%);
+      will-change: transform;
+    }
+
+    /* giant "03" ghost */
+    .how-ghost {
+      position: absolute;
+      right: 60px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 320px;
+      font-weight: 700;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.03);
+      user-select: none;
+      pointer-events: none;
+      line-height: 1;
+      will-change: transform;
+    }
+
+    .how-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .how-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      margin-bottom: 100px;
+      align-items: end;
+    }
+
+    .how-header-right {
+      font-size: 16px;
+      color: var(--text-dim);
+      line-height: 1.85;
+      font-weight: 300;
+    }
+
+    /* horizontal steps — text only, no cards */
+    .steps-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      position: relative;
+    }
+
+    /* connecting line */
+    .steps-row::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 28px;
+      right: 28px;
+      height: 1px;
+      background: linear-gradient(to right, var(--rouge), var(--rust), var(--rouge));
+    }
+
+    .step-item {
+      padding: 0 40px 0 0;
+      padding-top: 72px;
+      position: relative;
+    }
+
+    .step-index {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 56px;
+      height: 56px;
+      border: 1px solid var(--rouge);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--rouge-pale);
+      background: var(--slate);
+    }
+
+    .step-item:nth-child(2) .step-index {
+      border-color: var(--rust);
+      color: var(--sand);
+    }
+
+    .step-item:nth-child(3) .step-index {
+      border-color: var(--rust-light);
+      color: var(--sand);
+    }
+
+    .step-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    .step-body {
+      font-size: 15px;
+      color: var(--text-ghost);
+      line-height: 1.8;
+    }
+
+    .step-cue {
+      display: inline-block;
+      margin-top: 20px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    /* ─── SECTION 4 — SOBRE (parallax split) ─── */
+    #about {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: visible;
+    }
+
+    .about-left {
+      background: transparent;
+      position: relative;
+      overflow: visible;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    /* bg full-width — filho direto de #about */
+    #about>.about-left-bg {
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(ellipse at 35% 50%, rgba(139, 26, 26, 0.25) 0%, transparent 65%),
+        linear-gradient(160deg, var(--noir-2) 0%, var(--noir-2) 60%, var(--slate) 100%);
+      will-change: transform;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* 1. O WRAPPER */
+    .photo-wrap {
+      position: relative;
+      z-index: 2;
+      width: 75%;
+      max-width: 380px;
+    }
+
+    /* 2. O CARD ESCURO (Nunca use overflow: hidden aqui) */
+    .photo-box {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--noir);
+      border: 1px solid var(--line);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 3. OS DETALHES DOURADOS (Estão a salvos!) */
+    .photo-box::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      width: 40px;
+      height: 40px;
+      border-top: 1px solid var(--rust);
+      border-left: 1px solid var(--rust);
+      z-index: 1;
+    }
+
+    .photo-box::after {
+      content: '';
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      width: 40px;
+      height: 40px;
+      border-bottom: 1px solid var(--rouge);
+      border-right: 1px solid var(--rouge);
+      z-index: 3;
+    }
+
+    /* 4. A MÁSCARA (A tesoura perfeita que não buga) */
+    .photo-inner {
+      position: absolute;
+      bottom: 0;
+      /* Cola no chão do card */
+      left: 0;
+      width: 100%;
+      /* Largura exata do card (corta as laterais) */
+
+      /* AQUI ESTÁ A SALVAÇÃO: A máscara é 30% mais alta que o card! */
+      height: 130%;
+
+      z-index: 2;
+      pointer-events: none;
+
+      /* Como a máscara é mais alta, isso corta laterais e fundo, mas DEIXA a cabeça passar lá em cima! */
+      overflow: hidden;
+    }
+
+    /* 5. A FOTO (Gigante e afundada) */
+    .photo-inner img {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+
+      /* A foto gigante (250%) e empurrada para baixo (-25%) pra matar o buraco */
+      bottom: -25%;
+      width: 250%;
+
+      height: auto;
+      max-width: none;
+      display: block;
+      filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.6));
+      transition: transform 0.4s ease;
+      transform-origin: bottom center;
+    }
+
+    .photo-wrap:hover .photo-inner img {
+      transform: translateX(-50%) scale(1.03);
+    }
+
+    .photo-inner p,
+    .photo-inner span {
+      display: none;
+    }
+
+    /* floating year badge */
+    .year-badge {
+      position: absolute;
+      bottom: -24px;
+      right: -24px;
+      background: var(--rouge);
+      padding: 20px 24px;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .year-badge strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .year-badge span {
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--rouge-pale);
+    }
+
+    /* about ghost bg text */
+    .about-ghost {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 200px;
+      font-weight: 700;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(139, 26, 26, 0.05);
+      user-select: none;
+      pointer-events: none;
+      line-height: 1;
+      z-index: 1;
+      will-change: transform;
+    }
+
+    .about-right {
+      padding: 72px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: linear-gradient(150deg, #1C2030 0%, #12141c 100%);
+      position: relative;
+      overflow: hidden;
+      z-index: 2;
+      /* efeito flutuante */
+      margin: 64px 52px 64px 0;
+      align-self: center;
+      border-radius: 6px;
+      border: 1px solid rgba(201, 168, 76, 0.12);
+      box-shadow:
+        0 32px 100px rgba(0, 0, 0, 0.6),
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.03),
+        inset 0 1px 0 rgba(201, 168, 76, 0.18);
+    }
+
+    /* linha dourada no topo */
+    .about-right::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(201, 168, 76, 0.55), transparent);
+    }
+
+    /* reflexo interno */
+    .about-right::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 40%;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.025), transparent);
+      pointer-events: none;
+      border-radius: 6px 6px 0 0;
+    }
+
+    .about-right-bg {
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(ellipse at 10% 40%, rgba(139, 26, 26, 0.1) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 80%, rgba(28, 32, 48, 0.6) 0%, transparent 50%);
+      will-change: transform;
+    }
+
+    .about-script {
+      font-family: 'Pinyon Script', cursive;
+      font-size: 64px;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 4px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .about-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(46px, 5.5vw, 70px);
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -1px;
+      line-height: 1;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .about-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 21px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--rust);
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .about-text {
+      font-size: 16px;
+      color: var(--text-dim);
+      line-height: 1.9;
+      font-weight: 300;
+      margin-bottom: 48px;
+      max-width: 440px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .about-text strong {
+      color: var(--sand);
+      font-weight: 400;
+    }
+
+    /* lista de especialidades refinada */
+    .expertise {
+      list-style: none;
+      margin-bottom: 48px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .expertise li {
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(184, 92, 56, 0.12);
+      font-size: 15px;
+      letter-spacing: 0.2px;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: color 0.25s, gap 0.25s;
+      cursor: default;
+    }
+
+    .expertise li:first-child {
+      border-top: 1px solid rgba(184, 92, 56, 0.12);
+    }
+
+    .expertise li::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      background: var(--rust);
+      border-radius: 50%;
+      flex-shrink: 0;
+      transition: background 0.25s, transform 0.25s;
+    }
+
+    .expertise li:hover {
+      color: var(--cream);
+      gap: 18px;
+    }
+
+    .expertise li:hover::before {
+      background: var(--gold);
+      transform: scale(1.4);
+    }
+
+
+
+
+
+    /* ─── MOBILE FINAL CORRIGIDO ─── */
+    @media (max-width: 768px) {
+
+      /* Centraliza card perfeitamente */
+      .card {
+        margin: 0 auto !important;
+        padding: 20px !important;
+        max-width: 650px !important;
+      }
+
+      /* Foto levemente à direita */
+      *[class*="photo"] {
+        margin-left: 28px !important;
+        margin-right: auto !important;
+      }
+    }
+
+
+    /* ─── SECTION 5 — DEPOIMENTOS ─── */
+    #testimonials {
+      background: var(--noir);
+      padding: 140px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .test-bg {
+      position: absolute;
+      inset: -20%;
+      background: radial-gradient(ellipse at 50% 50%, rgba(139, 26, 26, 0.05) 0%, transparent 70%);
+      will-change: transform;
+    }
+
+    .test-ghost {
+      position: absolute;
+      left: -40px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 280px;
+      font-weight: 700;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(139, 26, 26, 0.05);
+      user-select: none;
+      pointer-events: none;
+      line-height: 1;
+      writing-mode: vertical-rl;
+      will-change: transform;
+    }
+
+    .test-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .test-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 80px;
+    }
+
+    .test-note {
+      font-size: 12px;
+      color: var(--text-ghost);
+      letter-spacing: 1px;
+    }
+
+    /* testimonials — editorial layout, no cards */
+    .test-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr;
+      gap: 1px;
+      background: var(--line);
+    }
+
+    .test-item {
+      background: var(--noir);
+      padding: 48px 40px;
+      position: relative;
+      transition: background 0.3s;
+    }
+
+    .test-item:hover {
+      background: var(--noir-2);
+    }
+
+    .test-item:first-child {
+      padding: 48px;
+      background: linear-gradient(135deg, rgba(139, 26, 26, 0.12), var(--noir));
+    }
+
+    .test-item:first-child:hover {
+      background: linear-gradient(135deg, rgba(139, 26, 26, 0.2), var(--noir-2));
+    }
+
+    .t-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 80px;
+      color: var(--rouge);
+      line-height: 0.7;
+      margin-bottom: 24px;
+      opacity: 0.4;
+    }
+
+    .t-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--text-dim);
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .t-text strong {
+      font-style: normal;
+      color: var(--sand);
+      font-weight: 400;
+    }
+
+    .t-result {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 20px;
+      padding: 8px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .t-author {
+      font-size: 13px;
+      color: var(--text-ghost);
+    }
+
+    .t-author strong {
+      color: var(--text-dim);
+      font-weight: 400;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* featured testimonial (first) */
+    .test-item:first-child .t-text {
+      font-size: 26px;
+      color: var(--text);
+    }
+
+    .test-item:first-child .t-quote {
+      font-size: 120px;
+      opacity: 0.25;
+    }
+
+    /* ─── SECTION 6 — CTA ─── */
+    #cta {
+      min-height: 80vh;
+      background: var(--slate);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 100px 80px;
+    }
+
+    .cta-bg {
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(ellipse at 50% 50%, rgba(139, 26, 26, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(184, 92, 56, 0.06) 0%, transparent 50%);
+      will-change: transform;
+    }
+
+    .cta-ghost {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(120px, 20vw, 280px);
+      font-weight: 700;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(139, 26, 26, 0.08);
+      white-space: nowrap;
+      user-select: none;
+      pointer-events: none;
+      line-height: 1;
+      will-change: transform;
+    }
+
+    .cta-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+
+    .cta-inner .section-badge {
+      justify-content: center;
+    }
+
+    .cta-inner .section-badge::before {
+      display: none;
+    }
+
+    .cta-h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(44px, 7vw, 88px);
+      font-weight: 600;
+      line-height: 1.0;
+      letter-spacing: -2px;
+      color: var(--text);
+      margin: 20px 0 16px;
+    }
+
+    .cta-h2 em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--rouge-pale);
+    }
+
+    .cta-script {
+      font-family: 'Pinyon Script', cursive;
+      font-size: 42px;
+      color: var(--gold);
+      display: block;
+      margin: 0 0 32px;
+    }
+
+    .cta-body {
+      font-size: 15px;
+      color: var(--text-dim);
+      line-height: 1.8;
+      font-weight: 300;
+      margin-bottom: 24px;
+    }
+
+    /* urgency line */
+    .cta-urgency-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--rouge-pale);
+      padding: 12px 24px;
+      border: 1px solid rgba(139, 26, 26, 0.3);
+      border-radius: 40px;
+      margin-bottom: 48px;
+    }
+
+    .btn-main {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--rust);
+      color: var(--noir);
+      padding: 18px 40px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      align-self: flex-start;
+    }
+
+    .btn-main::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--rust-light);
+      transform: translateX(-100%);
+      transition: transform 0.35s ease;
+    }
+
+    .btn-main span,
+    .btn-main svg {
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-main:hover::after {
+      transform: translateX(0);
+    }
+
+    .btn-main:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 50px rgba(184, 92, 56, 0.3);
+    }
+
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--rust);
+      color: var(--noir);
+      padding: 22px 52px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 8px;
+      align-self: flex-start;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .btn-wa::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--rust-light);
+      transform: translateX(-100%);
+      transition: transform 0.35s ease;
+    }
+
+    .btn-wa span,
+    .btn-wa svg {
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-wa:hover::after {
+      transform: translateX(0);
+    }
+
+    .btn-wa:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 60px rgba(184, 92, 56, 0.35);
+    }
+
+    .cta-sub {
+      font-size: 12px;
+      color: var(--text-ghost);
+      letter-spacing: 1px;
+    }
+
+    .cta-sub a {
+      color: var(--text-ghost);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .cta-sub a:hover {
+      border-bottom-color: var(--text-ghost);
+    }
+
+    /* guarantees — inline text, no cards */
+    .guarantees {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 1px solid var(--line);
+    }
+
+    .g-item {
+      font-size: 12px;
+      color: var(--text-ghost);
+      letter-spacing: 1px;
+      text-align: center;
+    }
+
+    .g-item strong {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 4px;
+      font-weight: 400;
+    }
+
+    /* ─── MARQUEE STRIP ─── */
+    #marquee-strip {
+      overflow: hidden;
+      padding: 36px 0;
+      background: var(--noir-2);
+      border-top: 1px solid rgba(201, 168, 76, 0.1);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+      position: relative;
+      z-index: 1;
+    }
+
+    .marquee-row {
+      overflow: hidden;
+      display: flex;
+    }
+
+    .marquee-row+.marquee-row {
+      margin-top: 18px;
+    }
+
+    .marquee-track {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      will-change: transform;
+    }
+
+    .marquee-track.left {
+      animation: mq-left 32s linear infinite;
+    }
+
+    .marquee-track.right {
+      animation: mq-right 26s linear infinite;
+    }
+
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+
+    .mq-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 28px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      opacity: 0.75;
+    }
+
+    .mq-item .mq-sep {
+      display: inline-block;
+      margin-left: 28px;
+      color: var(--gold);
+      font-size: 9px;
+      opacity: 0.55;
+    }
+
+    .marquee-track.right .mq-item {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      font-style: italic;
+      font-weight: 300;
+      letter-spacing: 1px;
+      text-transform: none;
+      color: rgba(201, 168, 76, 0.55);
+      opacity: 1;
+    }
+
+    .marquee-track.right .mq-item .mq-sep {
+      font-style: normal;
+      font-size: 11px;
+      opacity: 0.4;
+    }
+
+    @keyframes mq-left {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    @keyframes mq-right {
+      from {
+        transform: translateX(-50%);
+      }
+
+      to {
+        transform: translateX(0);
+      }
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #080404;
+      padding: 40px 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(139, 26, 26, 0.1);
+    }
+
+    .f-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      color: var(--text-ghost);
+    }
+
+    .f-logo em {
+      font-style: italic;
+      color: var(--rust);
+    }
+
+    .f-copy {
+      font-size: 11px;
+      color: var(--text-ghost);
+      letter-spacing: 1px;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .f-oab {
+      font-size: 11px;
+      color: var(--text-ghost);
+      letter-spacing: 1px;
+    }
+
+    /* ─── FLOATING WA ─── */
+    .float-wa {
+      position: fixed !important;
+      bottom: 36px;
+      right: 36px;
+      z-index: 9000 !important;
+      width: 58px;
+      height: 58px;
+      background: var(--rust) !important;
+      border-radius: 50%;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none !important;
+      color: white !important;
+      font-size: 0;
+      box-shadow: 0 8px 32px rgba(184, 92, 56, 0.4);
+      transition: transform 0.3s, box-shadow 0.3s;
+      animation: floatBob 3.5s ease-in-out infinite;
+    }
+
+    .float-wa:hover {
+      transform: scale(1.12);
+      box-shadow: 0 16px 48px rgba(184, 92, 56, 0.55);
+    }
+
+    .float-wa::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1px solid rgba(184, 92, 56, 0.35);
+      animation: ringPulse 2.2s ease-in-out infinite;
+    }
+
+    /* ─── KEYFRAMES ─── */
+    @keyframes riseIn {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes pulseDot {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: scale(0.7);
+      }
+    }
+
+    @keyframes scanLine {
+      0% {
+        left: -100%;
+      }
+
+      50% {
+        left: 100%;
+      }
+
+      100% {
+        left: 100%;
+      }
+    }
+
+    @keyframes floatBob {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    @keyframes ringPulse {
+
+      0%,
+      100% {
+        opacity: 0.5;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0;
+        transform: scale(1.3);
+      }
+    }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 900px) {
+      nav {
+        padding: 20px 28px;
+      }
+
+      nav.scrolled {
+        padding: 14px 28px;
+      }
+
+      .nav-right .nav-link {
+        display: none;
+      }
+
+      #problem {
+        grid-template-columns: 1fr;
+      }
+
+      .problem-left-col {
+        padding: 80px 32px 40px;
+      }
+
+      .problem-right-col {
+        padding: 40px 32px 80px;
+      }
+
+      .problem-right-col::before {
+        display: none;
+      }
+
+      .problem-ghost {
+        display: none;
+      }
+
+      #how {
+        padding: 80px 32px;
+      }
+
+      .how-header {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        margin-bottom: 60px;
+      }
+
+      .steps-row {
+        grid-template-columns: 1fr;
+      }
+
+      .steps-row::before {
+        display: none;
+      }
+
+      .step-item {
+        padding-top: 80px;
+        padding-bottom: 40px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      #about {
+        grid-template-columns: 1fr;
+        overflow: hidden;
+      }
+
+      .about-left {
+        min-height: 700px;
+        overflow: visible;
+        align-items: flex-end;
+        padding-bottom: 60px;
+        padding-top: 200px;
+      }
+
+      .about-right {
+        padding: 60px 28px;
+        margin: 32px 20px;
+        border-radius: 6px;
+      }
+
+      .photo-wrap {
+        width: 72%;
+        max-width: 280px;
+      }
+
+      .photo-box {
+        overflow: visible;
+      }
+
+      .photo-inner {
+        top: -40%;
+        bottom: 0;
+        left: -10%;
+        right: -10%;
+        height: 140%;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+      }
+
+      .year-badge {
+        bottom: -18px;
+        right: -12px;
+        padding: 14px 18px;
+      }
+
+      .year-badge strong {
+        font-size: 28px;
+      }
+
+      #testimonials {
+        padding: 80px 32px;
+      }
+
+      .test-header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+      }
+
+      .test-grid {
+        grid-template-columns: 1fr;
+        background: transparent;
+        gap: 0;
+      }
+
+      .test-item {
+        padding: 40px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .test-item:first-child {
+        padding-left: 0;
+      }
+
+      .test-ghost {
+        display: none;
+      }
+
+      #cta {
+        padding: 80px 32px;
+        min-height: auto;
+      }
+
+      .guarantees {
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 16px;
+        padding: 32px 28px;
+        text-align: center;
+      }
+
+      .float-wa {
+        bottom: 24px;
+        right: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══════ SPLASH ══════ -->
+  <div id="splash">
+    <div class="splash-bg"></div>
+    <div class="splash-vignette"></div>
+    <div class="splash-grain"></div>
+    <div class="splash-corner splash-tl"></div>
+    <div class="splash-corner splash-tr"></div>
+    <div class="splash-corner splash-bl"></div>
+    <div class="splash-corner splash-br"></div>
+
+    <div class="splash-center">
+      <img src="img/Logo1.png" alt="Dra. Rosângela" class="splash-logo-img">
+      <div class="splash-name">Dra. <em>Rosângela</em> Felipe</div>
+      <div class="splash-tagline">Advocacia Especializada em CNH</div>
+    </div>
+
+    <div class="splash-scroll-hint">
+      <div class="splash-scroll-line"></div>
+      <span>Role para continuar</span>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="logo">
+      <img src="img/Logo1.png" alt="Dra. Rosângela" class="logo-img">
+    </div>
+    <div class="nav-right">
+      <a href="#problem" class="nav-link">O Problema</a>
+      <a href="#about" class="nav-link">A Advogada</a>
+      <a href="#testimonials" class="nav-link">Casos</a>
+      <a href="https://wa.me/556181395820?text=Olá%2C%20preciso%20de%20ajuda%20com%20minha%20CNH" class="nav-btn"
+        target="_blank">Falar agora</a>
+    </div>
+  </nav>
+
+  <!-- ══════ PROBLEM ══════ -->
+  <section id="problem" class="parallax-section">
+    <div class="problem-bg parallax-bg" data-speed="0.3"></div>
+    <div class="problem-ghost parallax-bg" data-speed="0.15">PRAZO</div>
+
+    <div class="problem-left-col">
+      <div class="section-badge">O problema</div>
+      <h2 class="section-h2">
+        Perder a CNH pode<br>
+        <em>mudar tudo.</em>
+      </h2>
+      <p class="section-body">
+        A maioria não sabe que <strong>grande parte dos processos de suspensão e cassação
+          tem falhas que permitem recurso.</strong> Prazo vencido, notificação irregular,
+        autuação sem prova — brechas que só um especialista identifica a tempo.
+      </p>
+    </div>
+
+    <div class="problem-right-col">
+      <div class="problem-item">
+        <span class="p-num">— 01</span>
+        <div>
+          <div class="p-title">Você depende do carro para viver</div>
+          <p class="p-body">Motorista de app, autônomo, representante — sem CNH, sem sustento. A urgência é real.</p>
+        </div>
+      </div>
+      <div class="problem-item">
+        <span class="p-num">— 02</span>
+        <div>
+          <div class="p-title">Os prazos para recurso são curtos</div>
+          <p class="p-body">Após a notificação do DETRAN, você tem dias contados. Cada hora desperdiçada fecha uma
+            porta.</p>
+        </div>
+      </div>
+      <div class="problem-item">
+        <span class="p-num">— 03</span>
+        <div>
+          <div class="p-title">A burocracia foi feita para confundir</div>
+          <p class="p-body">Sem orientação, você pode perder o direito por erro processual — sem sequer saber que tinha
+            como recorrer.</p>
+        </div>
+      </div>
+      <div class="problem-item">
+        <span class="p-num">— 04</span>
+        <div>
+          <div class="p-title">Nem toda autuação é legítima</div>
+          <p class="p-body">Radar sem aferição, foto ilegível, multas prescritas — tudo pode e deve ser contestado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ HOW ══════ -->
+  <section id="how">
+    <div class="how-bg parallax-bg" data-speed="0.28"></div>
+    <div class="how-ghost">03</div>
+    <div class="how-inner">
+      <div class="how-header">
+        <div>
+          <div class="section-badge">Como funciona</div>
+          <h2 class="section-h2">Três passos para<br><em>proteger sua CNH</em></h2>
+        </div>
+      </div>
+      <div class="steps-row">
+        <div class="step-item">
+          <div class="step-index">01</div>
+          <div class="step-title">Me chame no WhatsApp</div>
+          <p class="step-body">Conte sua situação em poucos minutos pelo WhatsApp. Respondemos no mesmo dia e orientamos
+            os próximos passos.</p>
+          <span class="step-cue">Rápido & discreto</span>
+        </div>
+        <div class="step-item">
+          <div class="step-index">02</div>
+          <div class="step-title">Análise do caso</div>
+          <p class="step-body">Verificamos prazos, autuações e notificações. Identificamos todas as brechas legais
+            disponíveis para sua defesa.</p>
+          <span class="step-cue">Diagnóstico preciso</span>
+        </div>
+        <div class="step-item">
+          <div class="step-index">03</div>
+          <div class="step-title">Defesa e resultado</div>
+          <p class="step-body">Entramos com os recursos administrativos e judiciais para suspender, reduzir ou anular a
+            penalidade.</p>
+          <span class="step-cue">Sua CNH protegida</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ MARQUEE STRIP ══════ -->
+  <section id="marquee-strip" aria-hidden="true">
+
+    <!-- Faixa 1 — Resultados (esquerda) -->
+    <div class="marquee-row">
+      <div class="marquee-track left">
+        <span class="mq-item">Suspensão Revertida<span class="mq-sep">✦</span></span>
+        <span class="mq-item">Cassação Anulada<span class="mq-sep">✦</span></span>
+        <span class="mq-item">Recurso Deferido<span class="mq-sep">✦</span></span>
+        <span class="mq-item">Habilitação Preservada<span class="mq-sep">✦</span></span>
+        <span class="mq-item">Processo Arquivado<span class="mq-sep">✦</span></span>
+        <span class="mq-item">Autuação Contestada<span class="mq-sep">✦</span></span>
+        <span class="mq-item">Pontuação Reduzida<span class="mq-sep">✦</span></span>
+        <span class="mq-item">Defesa Administrativa<span class="mq-sep">✦</span></span>
+        <!-- duplicado para loop perfeito -->
+        <span class="mq-item">Suspensão Revertida<span class="mq-sep">✦</span></span>
+        <span class="mq-item">Cassação Anulada<span class="mq-sep">✦</span></span>
+        <span class="mq-item">Recurso Deferido<span class="mq-sep">✦</span></span>
+        <span class="mq-item">Habilitação Preservada<span class="mq-sep">✦</span></span>
+        <span class="mq-item">Processo Arquivado<span class="mq-sep">✦</span></span>
+        <span class="mq-item">Autuação Contestada<span class="mq-sep">✦</span></span>
+        <span class="mq-item">Pontuação Reduzida<span class="mq-sep">✦</span></span>
+        <span class="mq-item">Defesa Administrativa<span class="mq-sep">✦</span></span>
+      </div>
+    </div>
+
+    <!-- Faixa 2 — Credenciais (direita) -->
+    <div class="marquee-row">
+      <div class="marquee-track right">
+        <span class="mq-item">OAB/DF Registrada<span class="mq-sep">·</span></span>
+        <span class="mq-item">Atendimento Online<span class="mq-sep">·</span></span>
+        <span class="mq-item">Todo o Brasil<span class="mq-sep">·</span></span>
+        <span class="mq-item">Sigilo Total<span class="mq-sep">·</span></span>
+        <span class="mq-item">Direito de Trânsito<span class="mq-sep">·</span></span>
+        <span class="mq-item">Direito de Família<span class="mq-sep">·</span></span>
+        <span class="mq-item">Atendimento Humanizado<span class="mq-sep">·</span></span>
+        <span class="mq-item">Defesa Especializada<span class="mq-sep">·</span></span>
+        <!-- duplicado para loop perfeito -->
+        <span class="mq-item">OAB/DF Registrada<span class="mq-sep">·</span></span>
+        <span class="mq-item">Atendimento Online<span class="mq-sep">·</span></span>
+        <span class="mq-item">Todo o Brasil<span class="mq-sep">·</span></span>
+        <span class="mq-item">Sigilo Total<span class="mq-sep">·</span></span>
+        <span class="mq-item">Direito de Trânsito<span class="mq-sep">·</span></span>
+        <span class="mq-item">Direito de Família<span class="mq-sep">·</span></span>
+        <span class="mq-item">Atendimento Humanizado<span class="mq-sep">·</span></span>
+        <span class="mq-item">Defesa Especializada<span class="mq-sep">·</span></span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════ ABOUT ══════ -->
+  <section id="about">
+    <div class="about-left-bg parallax-bg" data-speed="0.35"></div>
+
+    <div class="about-left">
+      <div class="about-ghost">DRA</div>
+
+      <div class="photo-wrap">
+        <div class="photo-box">
+          <div class="photo-inner">
+            <p class="sr-only">Foto da Dra. Rosângela</p>
+            <img src="img/semFundo.png" alt="Foto da Dra. Rosângela">
+          </div>
+        </div>
+
+        <div class="year-badge">
+          <strong>10+</strong>
+          <span>Anos de atuação</span>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="about-right">
+      <div class="about-right-bg parallax-bg" data-speed="0.2"></div>
+      <span class="about-script">Doutora</span>
+      <h2 class="about-name">Rosângela Felipe</h2>
+      <p class="about-title">Especialista em Direito de Trânsito e Família</p>
+      <p class="about-text">
+        Com mais de <strong>10 anos de atuação</strong>, construiu sua carreira defendendo quem
+        enfrenta um sistema burocrático complexo. <strong>Especialista em suspensão e cassação de CNH</strong>,
+        já recuperou a habilitação de centenas de motoristas em todo o Brasil.
+        Atende presencialmente e de forma remota em todo o território nacional.
+      </p>
+      <ul class="expertise">
+        <li>Suspensão e cassação de CNH</li>
+        <li>Recursos administrativos no DETRAN</li>
+        <li>Anulação de multas irregulares</li>
+        <li>Direito de Família e Divórcio</li>
+        <li>Guarda, alimentos e herança</li>
+        <li>Atendimento presencial e online</li>
+      </ul>
+      <a href="https://wa.me/556181395820?text=Quero%20falar%20com%20a%20Dra.%20Rosângela" class="btn-main"
+        target="_blank">
+        <span>Falar com a Dra. Rosângela</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+          <path
+            d="M12 0C5.373 0 0 5.373 0 12c0 2.089.537 4.05 1.475 5.763L0 24l6.363-1.671A11.958 11.958 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z" />
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════ TESTIMONIALS ══════ -->
+  <section id="testimonials">
+    <div class="test-bg parallax-bg" data-speed="0.22"></div>
+    <div class="test-ghost">CASOS</div>
+    <div class="test-inner">
+      <div class="test-header">
+        <div>
+          <div class="section-badge">Depoimentos</div>
+          <h2 class="section-h2">Quem já <em>recuperou a CNH</em></h2>
+        </div>
+        <span class="test-note">Resultados reais · Identidades preservadas</span>
+      </div>
+      <div class="test-grid">
+        <div class="test-item">
+          <div class="t-quote">"</div>
+          <p class="t-text">A Dra. Rosângela encontrou <strong>duas autuações irregulares</strong> que ninguém tinha
+            identificado. Minha pontuação caiu e mantive minha habilitação.</p>
+          <div class="t-result">Suspensão revertida · Brasília/DF</div>
+          <div class="t-author"><strong>Marcos A.</strong> Motorista autônomo</div>
+        </div>
+        <div class="test-item">
+          <div class="t-quote">"</div>
+          <p class="t-text">Minha CNH é meu ganha-pão. A Dra. Rosângela <strong>cuidou de tudo</strong> — eu não
+            precisei entender de lei, não precisei correr atrás de nada. Só trabalhei enquanto ela resolvia.</p>
+          <div class="t-result">Cassação suspensa · Goiânia/GO</div>
+          <div class="t-author"><strong>Carlos E.</strong> Motorista de aplicativo</div>
+        </div>
+        <div class="test-item">
+          <div class="t-quote">"</div>
+          <p class="t-text">Parecia sem saída. A Doutora identificou <strong>falha no procedimento da abordagem</strong>
+            e o processo foi completamente anulado.</p>
+          <div class="t-result">Processo anulado · São Paulo/SP</div>
+          <div class="t-author"><strong>Roberto F.</strong> Representante comercial</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ CTA FINAL ══════ -->
+  <section id="cta">
+    <div class="cta-bg parallax-bg" data-speed="0.3"></div>
+    <div class="cta-ghost">AGORA</div>
+    <div class="cta-inner">
+      <div class="section-badge">Última chance</div>
+      <h2 class="cta-h2">
+        Você tem 30 dias corridos.<br>
+        <em>O relógio não para.</em>
+      </h2>
+      <span class="cta-script">E depois disso, não há mais o que fazer.</span>
+      <p class="cta-body">
+        Muita gente já perdeu a CNH por esperar demais. <strong>Quem age agora ainda tem chance de evitar isso — não
+          deixe a sua ser a próxima!</strong>
+      </p>
+      <div class="cta-urgency-line">
+        <span class="pulse-dot"></span>
+        Prazo fatal: 30 dias a partir da notificação do DETRAN
+      </div>
+      <br>
+      <a href="https://wa.me/556181395820?text=Olá%20Dra.%20Rosângela%2C%20preciso%20de%20ajuda%20urgente%20com%20minha%20CNH"
+        class="btn-wa" target="_blank">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+          <path
+            d="M12 0C5.373 0 0 5.373 0 12c0 2.089.537 4.05 1.475 5.763L0 24l6.363-1.671A11.958 11.958 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z" />
+        </svg>
+        <span>Consultoria no WhatsApp</span>
+      </a>
+      <div class="cta-sub" style="margin-top:16px;">
+        Prefere ligar? <a href="tel:+556181395820">(61) 98139-5820</a>
+      </div>
+
+      <div class="guarantees">
+        <div class="g-item"><strong>Mesmo dia</strong>Respondemos rápido</div>
+        <div class="g-item"><strong>Sem burocracia</strong>Você não precisa entender de lei</div>
+        <div class="g-item"><strong>Sigilo OAB</strong>100% confidencial</div>
+        <div class="g-item"><strong>Online & Presencial</strong>Todo o Brasil</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="f-logo">Dra. <em>Rosângela</em> · Advocacia</div>
+    <div class="f-copy">© 2025 · Todos os direitos reservados<br>Este site não constitui consulta jurídica</div>
+    <div class="f-oab">OAB/DF 47055</div>
+  </footer>
+
+  <!-- FLOATING WA -->
+  <a href="https://wa.me/556181395820?text=Olá%2C%20preciso%20de%20ajuda%20com%20minha%20CNH" class="float-wa"
+    target="_blank">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+      <path
+        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+      <path
+        d="M12 0C5.373 0 0 5.373 0 12c0 2.089.537 4.05 1.475 5.763L0 24l6.363-1.671A11.958 11.958 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z" />
+    </svg>
+  </a>
+
+  <script>
+    // ═══════════════════════════════════════════
+    //  PARALLAX & SCROLL REVEAL ENGINE — v3
+    // ═══════════════════════════════════════════
+
+    // ── NAV scroll state ──
+    const nav = document.getElementById('nav');
+    let lastNavY = 0;
+    window.addEventListener('scroll', () => {
+      const currentY = window.scrollY;
+      // scrolled styling
+      nav.classList.toggle('scrolled', currentY > 60);
+      // hide on scroll down, show on scroll up
+      if (currentY > lastNavY && currentY > 120) {
+        nav.classList.add('nav-hidden');
+      } else {
+        nav.classList.remove('nav-hidden');
+      }
+      lastNavY = currentY;
+    }, { passive: true });
+
+    // ── rAF loop ──
+    let ticking = false;
+    let scrollY = window.scrollY;
+
+    window.addEventListener('scroll', () => {
+      scrollY = window.scrollY;
+      if (!ticking) {
+        requestAnimationFrame(tick);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    function tick() {
+      runParallax();
+      runGhosts();
+      runReveal();
+      ticking = false;
+    }
+
+    // ─── 1. BACKGROUND PARALLAX (multi-speed layers) ───
+    function runParallax() {
+      document.querySelectorAll('[data-speed]').forEach(el => {
+        const speed = parseFloat(el.dataset.speed) || 0.3;
+        const parent = el.closest('section') || el.parentElement;
+        const rect = parent.getBoundingClientRect();
+        const center = rect.top + rect.height / 2 - window.innerHeight / 2;
+        el.style.transform = `translate3d(0, ${center * speed}px, 0)`;
+      });
+    }
+
+    // ─── 2. GHOST TEXT PARALLAX (independent speeds) ───
+    function runGhosts() {
+      // problem ghost — moves up as you scroll down
+      const pg = document.querySelector('.problem-ghost');
+      if (pg) {
+        const sec = document.getElementById('problem');
+        const rect = sec.getBoundingClientRect();
+        const rel = (rect.top + rect.height / 2 - window.innerHeight / 2);
+        pg.style.transform = `translate3d(0, ${rel * 0.18}px, 0)`;
+      }
+
+      // how ghost number
+      const howG = document.querySelector('.how-ghost');
+      if (howG) {
+        const sec = document.getElementById('how');
+        const rect = sec.getBoundingClientRect();
+        const rel = (rect.top + rect.height / 2 - window.innerHeight / 2);
+        howG.style.transform = `translateY(calc(-50% + ${rel * 0.2}px))`;
+      }
+
+      // about ghost
+      const ag = document.querySelector('.about-ghost');
+      if (ag) {
+        const sec = document.getElementById('about');
+        const rect = sec.getBoundingClientRect();
+        const rel = (rect.top + rect.height / 2 - window.innerHeight / 2);
+        ag.style.transform = `translate3d(0, ${rel * 0.15}px, 0)`;
+      }
+
+      // test ghost
+      const tg = document.querySelector('.test-ghost');
+      if (tg) {
+        const sec = document.getElementById('testimonials');
+        const rect = sec.getBoundingClientRect();
+        const rel = (rect.top + rect.height / 2 - window.innerHeight / 2);
+        tg.style.transform = `translateY(calc(-50% + ${rel * 0.2}px))`;
+      }
+
+      // cta ghost
+      const cg = document.querySelector('.cta-ghost');
+      if (cg) {
+        const sec = document.getElementById('cta');
+        const rect = sec.getBoundingClientRect();
+        const rel = (rect.top + rect.height / 2 - window.innerHeight / 2);
+        cg.style.transform = `translate(-50%, calc(-50% + ${rel * 0.22}px))`;
+      }
+    }
+
+    // ─── 3. SCROLL REVEAL (fade + rise on enter) ───
+    const revealEls = [];
+
+    function initReveal() {
+      // targets: sections' headings, paragraphs, items, steps, test-items
+      const selectors = [
+        '.section-badge',
+        '.section-h2',
+        '.section-body',
+        '.problem-item',
+        '.step-item',
+        '.test-item',
+        '.t-quote',
+        '.about-script',
+        '.about-name',
+        '.about-title',
+        '.about-text',
+        '.expertise li',
+        '.how-header-right',
+        '.cta-h2',
+        '.cta-script',
+        '.cta-body',
+        '.cta-urgency-line',
+        '.btn-wa',
+        '.guarantees .g-item',
+        '.year-badge',
+        '.photo-wrap',
+        '.how-header .section-h2',
+        '.problem-left-col .section-badge',
+      ];
+
+      selectors.forEach(sel => {
+        document.querySelectorAll(sel).forEach((el, i) => {
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(28px)';
+          el.style.transition = `opacity 0.75s ease, transform 0.75s ease`;
+          el.style.transitionDelay = `${i * 0.06}s`;
+          revealEls.push(el);
+        });
+      });
+    }
+
+    function runReveal() {
+      const vh = window.innerHeight;
+      revealEls.forEach(el => {
+        if (el.dataset.revealed) return;
+        const rect = el.getBoundingClientRect();
+        if (rect.top < vh * 0.88) {
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+          el.dataset.revealed = '1';
+        }
+      });
+    }
+
+    // ─── 4. SMOOTH SCROLL for nav links ───
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // ─── INIT ───
+    initReveal();
+    tick(); // run once on load
+
+    // ══════════════════════════════════
+    //  SPLASH — sobe com o scroll
+    // ══════════════════════════════════
+    (function () {
+      const splash = document.getElementById('splash');
+      if (!splash) return;
+
+      const VH = window.innerHeight;
+      const SCROLL_TOTAL = VH; // rola 1 tela para o splash sair
+
+      let virtualY = 0;   // scroll acumulado virtual
+      let active = true;
+      let rafPending = false;
+      let touchStartY = 0;
+
+      // Bloqueia scroll real da página enquanto o splash estiver ativo
+      document.body.style.overflow = 'hidden';
+      document.body.classList.add('splash-on');
+
+      function applyPosition() {
+        const progress = Math.min(virtualY / SCROLL_TOTAL, 1);
+        const translateY = -progress * VH;
+        splash.style.transform = `translateY(${translateY}px)`;
+        // fade começa em 40% do caminho
+        const opacity = progress < 0.4 ? 1 : 1 - ((progress - 0.4) / 0.6);
+        splash.style.opacity = Math.max(0, opacity);
+
+        if (progress >= 1) {
+          finish();
+        }
+        rafPending = false;
+      }
+
+      function addDelta(delta) {
+        if (!active) return;
+        virtualY = Math.max(0, Math.min(virtualY + delta, SCROLL_TOTAL));
+        if (!rafPending) {
+          rafPending = true;
+          requestAnimationFrame(applyPosition);
+        }
+      }
+
+      function finish() {
+        active = false;
+        document.body.style.overflow = '';
+        document.body.classList.remove('splash-on');
+        window.removeEventListener('wheel', onWheel, { passive: false });
+        window.removeEventListener('touchstart', onTouchStart, { passive: true });
+        window.removeEventListener('touchmove', onTouchMove, { passive: false });
+        window.removeEventListener('keydown', onKey);
+        setTimeout(() => splash.remove(), 100);
+      }
+
+      // ── Wheel ──
+      function onWheel(e) {
+        if (!active) return;
+        e.preventDefault();
+        addDelta(e.deltaY * 1.2);
+      }
+
+      // ── Touch ──
+      function onTouchStart(e) {
+        touchStartY = e.touches[0].clientY;
+      }
+      function onTouchMove(e) {
+        if (!active) return;
+        e.preventDefault();
+        const dy = touchStartY - e.touches[0].clientY;
+        touchStartY = e.touches[0].clientY;
+        addDelta(dy * 2.5);
+      }
+
+      // ── Teclado ──
+      function onKey(e) {
+        if (!active) return;
+        if (['ArrowDown', 'PageDown', 'Space', ' '].includes(e.key)) {
+          e.preventDefault();
+          addDelta(VH * 0.25);
+        }
+      }
+
+      // Aguarda 900ms (animações de entrada) para começar a aceitar interação
+      setTimeout(() => {
+        window.addEventListener('wheel', onWheel, { passive: false });
+        window.addEventListener('touchstart', onTouchStart, { passive: true });
+        window.addEventListener('touchmove', onTouchMove, { passive: false });
+        window.addEventListener('keydown', onKey);
+      }, 900);
+    })();
+  </script>
+</body>
+
+</html>
